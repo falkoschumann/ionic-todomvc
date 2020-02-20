@@ -1,0 +1,19 @@
+{
+  "name": "todomvc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && http-server -o",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Falko Schumann",
+  "license": "MIT",
+  "dependencies": {
+    "@ionic/core": "^5.0.0"
+  },
+  "devDependencies": {
+    "http-server": "^0.12.1",
+    "typescript": "^3.7.5"
+  }
+}
