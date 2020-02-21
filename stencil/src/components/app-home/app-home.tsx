@@ -10,20 +10,44 @@ export class AppHome {
     return [
       <ion-header>
         <ion-toolbar color="primary">
-          <ion-title>Home</ion-title>
+          <ion-title>todos</ion-title>
         </ion-toolbar>
+        <ion-toolbar>
+          <ion-segment value="all">
+            <ion-segment-button value="all">
+              <ion-label>All</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="active">
+              <ion-label>Active</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="completed">
+              <ion-label>Completed</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-toolbar>
+        <ion-item lines="none">
+          <ion-checkbox slot="start"></ion-checkbox>
+          <ion-input placeholder="What needs to be done?"></ion-input>
+        </ion-item>
       </ion-header>,
-
-      <ion-content class="ion-padding">
-        <p>
-          Welcome to the PWA Toolkit. You can use this starter to build entire
-          apps with web components using Stencil and ionic/core! Check out the
-          README for everything that comes in this starter out of the box and
-          check out our docs on <a href="https://stenciljs.com">stenciljs.com</a> to get started.
-        </p>
-
-        <ion-button href="/profile/ionic" expand="block">Profile page</ion-button>
-      </ion-content>
+      <ion-content>
+        <ion-list>
+          <ion-item>
+            <ion-checkbox slot="start" checked></ion-checkbox>
+            <ion-label style={{ 'text-decoration': 'line-through' }}>Taste JavaScript</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-label>Buy a unicorn</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>,
+      <ion-footer class="ion-no-border">
+        <ion-toolbar>
+          <ion-label slot="start">1 item left</ion-label>
+          <ion-button slot="end" fill="clear">Clear completed</ion-button>
+        </ion-toolbar>
+      </ion-footer>
     ];
   }
 }
