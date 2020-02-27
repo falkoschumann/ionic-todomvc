@@ -1,16 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Platform, IonInput } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { TodoService } from './todo.service';
+import { Todo } from './todo';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
+  todos = Array<Todo>();
 
   constructor(
     private todoService: TodoService,
@@ -28,10 +31,20 @@ export class AppComponent {
     });
   }
 
-  addTodo(event: KeyboardEvent) {
+  ngOnInit() {
+    this.updateTodos();
+  }
+
+  private async updateTodos() {
+    this.todos = await this.todoService.getTodos();
+  }
+
+  async addTodo(event: KeyboardEvent) {
     if (event.code === 'Enter') {
       const input = event.target as unknown as IonInput;
-      this.todoService.addTodo(input.value as string);
+      await this.todoService.addTodo(input.value as string);
+      input.value = '';
+      this.updateTodos();
     }
   }
 }
