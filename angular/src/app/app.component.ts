@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Platform, IonInput } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+
 import { TodoService } from './todo.service';
 import { Todo } from './todo';
 
@@ -56,7 +57,7 @@ export class AppComponent implements OnInit {
   itemsLeft(): string {
     const count = this.todos.filter(it => !it.isCompleted).length;
     if (count === 0) {
-      return 'no item left';
+      return 'No item left';
     }
     const suffix = count > 1 ? 's' : '';
     return `${count} item${suffix} left`;
