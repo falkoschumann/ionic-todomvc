@@ -52,4 +52,13 @@ export class AppComponent implements OnInit {
     await this.todoService.toggleTodo(todo);
     this.updateTodos();
   }
+
+  itemsLeft(): string {
+    const count = this.todos.filter(it => !it.isCompleted).length;
+    if (count === 0) {
+      return 'no item left';
+    }
+    const suffix = count > 1 ? 's' : '';
+    return `${count} item${suffix} left`;
+  }
 }
