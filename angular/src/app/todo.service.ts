@@ -1,27 +1,32 @@
 import { Injectable } from '@angular/core';
 
+import { Storage } from '@ionic/storage';
+
 import { Todo } from './todo';
-import { TodoProvider } from './todo.provider';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoService {
 
-  constructor(private provider: TodoProvider) { }
+  constructor(private storage: Storage) { }
 
   async getTodos(): Promise<Array<Todo>> {
-    return await this.provider.load();
+    let todos = await this.storage.get('todos');
+    if (todos == null) {
+      todos = Array<Todo>();
+    }
+    return todos;
   }
 
   async addTodo(text: string): Promise<any> {
-    const todos = await this.provider.load();
+    const todos = await this.getTodos();
     todos.push({
       id: this.nextId(todos),
       text,
       isCompleted: false
     });
-    return this.provider.save(todos);
+    return todos;
   }
 
   private nextId(todos: Array<Todo>): number {
@@ -35,6 +40,17 @@ export class TodoService {
   }
 
   async toggleTodo(todo: Todo): Promise<any> {
-    return this.provider.update({ ...todo, isCompleted: !todo.isCompleted });
+    return this.update({ ...todo, isCompleted: !todo.isCompleted });
+  }
+
+  private async update(todo: Todo): Promise<any> {
+    const todos = await this.getTodos();
+    const index = todos.findIndex(it => it.id === todo.id);
+    todos[index] = { id: todo.id, text: todo.text, isCompleted: todo.isCompleted };
+    return this.save(todos);
+  }
+
+  private save(todos: Todo[]): Promise<any> {
+    return this.storage.set('todos', todos);
   }
 }
