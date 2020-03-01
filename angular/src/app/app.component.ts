@@ -14,6 +14,7 @@ import { Todo } from './todo';
 })
 export class AppComponent implements OnInit {
 
+  filter = 'all';
   todos = Array<Todo>();
   itemsLeft = '';
 
@@ -37,18 +38,34 @@ export class AppComponent implements OnInit {
     this.update();
   }
 
-  private async update() {
-    // todos
-    this.todos = await this.todoService.getTodos();
+  changeFilter(filter: string) {
+    this.filter = filter;
+    this.update();
+  }
 
-    // itemsLeft
-    const count = this.todos.filter(it => !it.isCompleted).length;
+  private async update() {
+    let todos = await this.todoService.getTodos();
+
+    const count = todos.filter(it => !it.isCompleted).length;
     if (count === 0) {
       this.itemsLeft = 'No item left';
     } else {
       const suffix = count > 1 ? 's' : '';
       this.itemsLeft = `${count} item${suffix} left`;
     }
+
+    switch (this.filter) {
+      case 'active':
+        todos = todos.filter(it => !it.isCompleted);
+        break;
+      case 'completed':
+        todos = todos.filter(it => it.isCompleted);
+        break;
+      case 'all':
+      default:
+        break;
+    }
+    this.todos = todos;
   }
 
   async addTodo(event: KeyboardEvent) {

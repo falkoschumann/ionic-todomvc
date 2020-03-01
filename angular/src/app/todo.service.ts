@@ -10,8 +10,8 @@ export class TodoService {
 
   constructor(private provider: TodoProvider) { }
 
-  getTodos(): Promise<Array<Todo>> {
-    return this.provider.load();
+  async getTodos(): Promise<Array<Todo>> {
+    return await this.provider.load();
   }
 
   async addTodo(text: string): Promise<any> {

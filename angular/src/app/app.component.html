@@ -3,6 +3,19 @@
     <ion-toolbar color="primary">
       <ion-title>todos</ion-title>
     </ion-toolbar>
+    <ion-toolbar>
+      <ion-segment [value]="filter" (ionChange)="changeFilter($event.detail.value)">
+        <ion-segment-button value="all">
+          <ion-label>All</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="active">
+          <ion-label>Active</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="completed">
+          <ion-label>Completed</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
     <ion-item lines="none">
       <ion-input placeholder="What needs to be done?" (keyup)="addTodo($event)"></ion-input>
     </ion-item>
