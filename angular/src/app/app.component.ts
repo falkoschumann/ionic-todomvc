@@ -15,6 +15,7 @@ import { Todo } from './todo';
 export class AppComponent implements OnInit {
 
   todos = Array<Todo>();
+  itemsLeft = '';
 
   constructor(
     private todoService: TodoService,
@@ -33,11 +34,21 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.updateTodos();
+    this.update();
   }
 
-  private async updateTodos() {
+  private async update() {
+    // todos
     this.todos = await this.todoService.getTodos();
+
+    // itemsLeft
+    const count = this.todos.filter(it => !it.isCompleted).length;
+    if (count === 0) {
+      this.itemsLeft = 'No item left';
+    } else {
+      const suffix = count > 1 ? 's' : '';
+      this.itemsLeft = `${count} item${suffix} left`;
+    }
   }
 
   async addTodo(event: KeyboardEvent) {
@@ -45,21 +56,12 @@ export class AppComponent implements OnInit {
       const input = event.target as unknown as IonInput;
       await this.todoService.addTodo(input.value as string);
       input.value = '';
-      this.updateTodos();
+      this.update();
     }
   }
 
   async toggleTodo(todo: Todo) {
     await this.todoService.toggleTodo(todo);
-    this.updateTodos();
-  }
-
-  itemsLeft(): string {
-    const count = this.todos.filter(it => !it.isCompleted).length;
-    if (count === 0) {
-      return 'No item left';
-    }
-    const suffix = count > 1 ? 's' : '';
-    return `${count} item${suffix} left`;
+    await this.update();
   }
 }
