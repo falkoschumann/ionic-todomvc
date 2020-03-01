@@ -3,7 +3,10 @@
     <ion-toolbar color="primary">
       <ion-title>todos</ion-title>
     </ion-toolbar>
-    <ion-toolbar>
+    <ion-item lines="none">
+      <ion-input placeholder="What needs to be done?" (keyup)="addTodo($event)"></ion-input>
+    </ion-item>
+    <ion-toolbar *ngIf="todos.length > 0">
       <ion-segment [value]="filter" (ionChange)="changeFilter($event.detail.value)">
         <ion-segment-button value="all">
           <ion-label>All</ion-label>
@@ -16,13 +19,10 @@
         </ion-segment-button>
       </ion-segment>
     </ion-toolbar>
-    <ion-item lines="none">
-      <ion-input placeholder="What needs to be done?" (keyup)="addTodo($event)"></ion-input>
-    </ion-item>
   </ion-header>
 
   <ion-content>
-    <ion-list>
+    <ion-list *ngIf="todos.length > 0">
       <ion-item *ngFor="let todo of todos">
         <ion-checkbox slot="start" [checked]="todo.isCompleted" (click)="toggleTodo(todo)"></ion-checkbox>
         <ion-label>{{todo.text}}</ion-label>
@@ -30,7 +30,7 @@
     </ion-list>
   </ion-content>
 
-  <ion-footer class="ion-no-border">
+  <ion-footer *ngIf="todos.length > 0" class="ion-no-border">
     <ion-item lines="none">
       <ion-label slot="start">{{itemsLeft}}</ion-label>
     </ion-item>
