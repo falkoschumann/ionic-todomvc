@@ -46,4 +46,10 @@ export class TodoService {
     todos = todos.filter(it => it.id !== todo.id);
     return this.provider.save(todos);
   }
+
+  async clearCompleted() {
+    let todos = await this.provider.load();
+    todos = todos.filter(it => !it.isCompleted);
+    return this.provider.save(todos);
+  }
 }

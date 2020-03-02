@@ -30,8 +30,8 @@
             {{todo.text}}
           </ion-label>
         </ion-item>
-        <ion-item-options side="end" (ionSwipe)="deleteTodo(todo)">
-          <ion-item-option color="danger" expandable (click)="deleteTodo(todo)">
+        <ion-item-options side="end" (ionSwipe)="removeTodo(todo)">
+          <ion-item-option color="danger" expandable (click)="removeTodo(todo)">
             Delete
           </ion-item-option>
         </ion-item-options>
@@ -40,8 +40,9 @@
   </ion-content>
 
   <ion-footer *ngIf="todos.length > 0" class="ion-no-border">
-    <ion-item lines="none">
-      <ion-label slot="start">{{itemsLeft}}</ion-label>
-    </ion-item>
+    <ion-toolbar>
+      <ion-label slot="start" class="ion-padding-horizontal">{{itemsLeft}}</ion-label>
+      <ion-button slot="end" fill="clear" (click)="clearCompleted()">Clear completed</ion-button>
+    </ion-toolbar>
   </ion-footer>
 </ion-app>

@@ -82,8 +82,13 @@ export class AppComponent implements OnInit {
     this.update();
   }
 
-  async deleteTodo(todo: Todo) {
+  async removeTodo(todo: Todo) {
     await this.todoService.deleteTodo(todo);
+    this.update();
+  }
+
+  async clearCompleted() {
+    await this.todoService.clearCompleted();
     this.update();
   }
 }
