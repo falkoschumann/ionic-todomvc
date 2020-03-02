@@ -40,4 +40,10 @@ export class TodoService {
     todos[index] = { ...todo, isCompleted: !todo.isCompleted };
     return this.provider.save(todos);
   }
+
+  async deleteTodo(todo: Todo): Promise<any> {
+    let todos = await this.provider.load();
+    todos = todos.filter(it => it.id !== todo.id);
+    return this.provider.save(todos);
+  }
 }

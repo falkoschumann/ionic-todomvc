@@ -79,6 +79,11 @@ export class AppComponent implements OnInit {
 
   async toggleTodo(todo: Todo) {
     await this.todoService.toggleTodo(todo);
-    await this.update();
+    this.update();
+  }
+
+  async deleteTodo(todo: Todo) {
+    await this.todoService.deleteTodo(todo);
+    this.update();
   }
 }
