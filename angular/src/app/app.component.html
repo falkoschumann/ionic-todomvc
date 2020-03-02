@@ -26,10 +26,12 @@
       <ion-item-sliding *ngFor="let todo of todos">
         <ion-item>
           <ion-checkbox slot="start" [checked]="todo.isCompleted" (click)="toggleTodo(todo)"></ion-checkbox>
-          <ion-label>{{todo.text}}</ion-label>
+          <ion-label [color]="todo.isCompleted ? 'medium' : null" [style.text-decoration]="todo.isCompleted ? 'line-through': null">
+            {{todo.text}}
+          </ion-label>
         </ion-item>
         <ion-item-options side="end" (ionSwipe)="deleteTodo(todo)">
-          <ion-item-option color="danger" expandable  (click)="deleteTodo(todo)">
+          <ion-item-option color="danger" expandable (click)="deleteTodo(todo)">
             Delete
           </ion-item-option>
         </ion-item-options>
